@@ -31,78 +31,82 @@ The Histogram of gray scale image and color image is shown.
 ### Grayscale image and Color image
 ```
 import cv2
+import numpy as np
 import matplotlib.pyplot as plt
-gray_image = cv2.imread("gray.jpeg")
-color_image = cv2.imread("dip.jpeg",-1)
-cv2.imshow("Gray Image",gray_image)
-cv2.imshow("Colour Image",color_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+
+# Read image safely
+grayscale_image = cv2.imread("saji.png", cv2.IMREAD_GRAYSCALE)
+color_img = cv2.imread("saji.png")
+
+# Check if images are loaded
+if grayscale_image is None or color_img is None:
+    print("Error: Image could not be loaded.")
+    exit()
+
 ```
 
 
 ### Histogram of Grayscale image
 ```
-import numpy as np
-import cv2
-Gray_image = cv2.imread("gray.jpeg")
-Color_image = cv2.imread("dip.jpeg")
-import matplotlib.pyplot as plt
-gray_hist = cv2.calcHist([Gray_image],[0],None,[256],[0,256])
-color_hist = cv2.calcHist([Color_image],[0],None,[256],[0,256])
-plt.figure()
-plt.imshow(Gray_image)
-plt.show()
-plt.title("Histogram")
-plt.xlabel("Grayscale Value")
-plt.ylabel("Pixel Count")
-plt.stem(gray_hist)
-plt.show()
+# Calculate histograms
+gray_hist = cv2.calcHist([grayscale_image], [0], None, [256], [0, 256])
+hist_b = cv2.calcHist([color_img], [0], None, [256], [0, 256])
+hist_g = cv2.calcHist([color_img], [1], None, [256], [0, 256])
+hist_r = cv2.calcHist([color_img], [2], None, [256], [0, 256])
 ```
 
 ### Histogram of Color image
 ```
-plt.imshow(Color_image)
+
+# Plot images
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.imshow(grayscale_image, cmap='gray')
+plt.title('Grayscale Image')
+plt.axis('off')
+plt.subplot(1, 2, 2)
+plt.imshow(cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB))
+plt.title('Color Image')
+plt.axis('off')
 plt.show()
-plt.title("Histogram of Color Image - Green Channel")
-plt.xlabel("Intensity Value")
-plt.ylabel("Pixel Count")
-plt.stem(color_hist)
-plt.show()
-cv2.waitKey(0)
 ```
 
 
 ### Histogram equalization of Grayscale image
 ```
-import cv2
-gray_image = cv2.imread("dip.jpeg",0)
-cv2.imshow('Grey Scale Image',gray_image)
-equ = cv2.equalizeHist(gray_image)
-cv2.imshow("Equalized Image",equ)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# Plot histograms
+plt.figure(figsize=(12, 5))
+plt.subplot(1, 2, 1)
+plt.plot(gray_hist, color='black')
+plt.title("Grayscale Histogram")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Count")
+
+plt.subplot(1, 2, 2)
+plt.plot(hist_r, color='red')
+plt.plot(hist_g, color='green')
+plt.plot(hist_b, color='blue')
+plt.title("Color Histogram")
+plt.xlabel("Pixel Intensity")
+plt.ylabel("Count")
+plt.show()
 ```
 ## Output:
 ### Input Grayscale Image and Color Image
 
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/a544b1f2-6c8d-4cbc-bce8-6be179ea8a2a)
+<img width="782" height="427" alt="image" src="https://github.com/user-attachments/assets/cb18f5da-be25-41a5-8ccf-471fd910d48f" />
+
 
 
 ### Histogram of Grayscale Image and any channel of Color Image
 
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/f50eafea-aed2-4762-b1a2-648f9c9570d9)
+<img width="988" height="470" alt="image" src="https://github.com/user-attachments/assets/3266ab6a-4dd2-435f-95f2-bc26868c9e16" />
+
 
 
 ### Histogram Equalization of Grayscale Image.
+<img width="988" height="470" alt="image" src="https://github.com/user-attachments/assets/1dd58d6f-16ac-488d-9ed8-51c6c050ba08" />
 
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/9942d725-41be-4176-bad8-279b91390bfa)
-
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/fe12accd-1cba-47fb-b641-e235c1584df2)
-
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/0310da98-71ab-4697-be1d-68fa24a39f73)
-
-![image](https://github.com/22009150/Histogram-of-an-images/assets/118708624/84b68301-0a31-4524-bdc4-5ed2bd6e20fd)
 
 ## Result: 
 Thus the histogram for finding the frequency of pixels in an image with pixel values ranging from 0 to 255 is obtained. Also,histogram equalization is done for the gray scale image using OpenCV.
